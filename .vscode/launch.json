@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "gdb - Build and debug project",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/bin/Search2",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask":"CMake: Build (Debug)",
+            "logging": {
+                "trace": true,
+                "engineLogging": true,
+                "programOutput": true
+            }
+        }
+    ]
+}
