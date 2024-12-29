@@ -18,3 +18,22 @@ Oh, none of this is tested yet. I'll get to that eventually.
 
 This is my "video-game time" until it works. Haha.
 
+
+
+
+Dec 28, 2024 update:
+
+I refactored the whole thing.
+
+In fact, this is less functional than the last version.
+
+I like it better though. 
+
+0.044 microseconds to load the stack.
+
+And we have... datastructures!
+
+The question is, how long will it take to query?
+
+I'm taking some time off to play EVE Online.
+

@@ -7,7 +7,7 @@ project(Search2 C CXX)
 
 ################## Compile-time options ##################
 set(DEBUG_BUILD            ON                           )
-set(USE_ADDRESS_SANITIZER  OFF                           )
+set(USE_ADDRESS_SANITIZER  ON                           )
 set(PROJECT_BINARY_DIR     "${CMAKE_SOURCE_DIR}/build"  )
 set(CPU_THREADS            18                           )
 ################ end Compile-time options ################
@@ -42,11 +42,17 @@ if(USE_ADDRESS_SANITIZER)
 find_library(asan_LIBRARY NAMES asan PATHS "/usr/lib/gcc/x86_64-redhat-linux/11")
 endif()
 
-add_executable(Search2 generated_source_files/main.c)
+add_executable(Search2 main.c)
+
+target_sources(Search2
+    PRIVATE 
+        ${PROJECT_SOURCE_DIR}/src/primary_thread.c
+        ${PROJECT_SOURCE_DIR}/src/wordlist.c
+    )
 
 target_include_directories(Search2 
     PUBLIC 
-        ${PROJECT_SOURCE_DIR}/generated_headers/
+        ${PROJECT_SOURCE_DIR}/src/
     )
 
 if(USE_ADDRESS_SANITIZER)
