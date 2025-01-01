@@ -45,6 +45,6 @@ I discovered something about the stack that's worth mentioning.
   Remember that thing I said about 0.044 microseconds? That's real. That's repeatable on my machine.
   If I build this thing in -O3 and run it from within the IDE, that's how long it takes to load the entire wordlist into memory.
   If I run the same build from the terminal, it takes 0.22 microseconds, which is still great. I don't know why it's slower - should it be? I mean, why does the program execute faster in the IDE? That's something to investigate later. Maybe I should increase the thread priority.
-Today, while fixing some type-related problems in the previous version, I increased the stack loading time to 3 whole seconds by... making 1 static array containing pointers to objects that had already been put into the stack.
+Today, while fixing some type-related problems in the previous version, I increased the stack loading time to 3 whole milliseconds by... making 1 static array containing pointers to objects that had already been put into the stack.
 Hmm...
 So, anyways, this thing is going to be great. I have no idea how long it's going to take to make it.
