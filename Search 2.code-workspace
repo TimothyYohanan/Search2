@@ -64,7 +64,8 @@
 			"cinttypes": "c",
 			"typeinfo": "c",
 			"stdbool.h": "c",
-			"primary_thread.h": "c"
+			"primary_thread.h": "c",
+			"pthread.h": "c"
 		}
 	}
 }

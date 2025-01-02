@@ -1,0 +1,38 @@
+Synopsis of development up until Jan 2, 2025:
+    Context: 
+        I began this project just for fun after writing what I belive to be a pretty well optimized reverse-index search strategy using Sqlite3's C library.
+        The purpose of that project was to make sure that sqlite could perform well enough for a mobile app that I'm working on. The app is pretty graphics intensive and I wanted a database that was as light (haha) as possible.
+
+        So, I got to the end of that project and was seeing ~600 microsecond query times on my workstation, which in my mind equates to ~1200 microseconds on a mobile device. You can read more of my notes about that in my 'Search' repository here on GitHub.
+
+        My conclusion was that, well, that was good enough. But I knew that it could be faster. 
+        And, as I am currently in a lul in that mobile-development project until some design work is completed, I decided to try to make something faster than sqlite for reverse index searches, specifically.
+    
+    What has happened so far?
+        Dec. 22, 2024 - Made the first commit for this project
+            - Introduced a header file containing ~370,000 words in static, constant arrays. This header file was created using a generator program written in Python.
+            - Began thinking about the nature of the header file, and that the arrays (as implimented) would be stored in the program data sector.
+
+        Dec. (26?) 27 & 28 - Started thinking about searching and sorting algorithms. Created the RSort repository here on GitHub.
+        
+        Dec. 28, 2024 - 'Restarted' the project, with the words now being loaded into the stack
+            - Noticed that it took 0.044 microseconds to load the entire wordlist into the stack (compiled -O3 Release, executed from within IDE)
+            - Noticed that running the same binary from the console resulted in a 0.22 microsecond timespan for loading the entire wordlist into the stack
+
+        Jan. 1, 2024 - After taking a break for several days, I came back to the project and noticed some problems.
+            - While working on those problems, I noticed that adding one array to the stack containing the memory locations of the wlPart structures that had already been pushed into the stack took 3 milliseconds.
+                - 3 milliseconds! I went from a 0.044 microsecond load time to a ~3000 microsecond load time.
+
+
+Jan 2, 2025:
+    - 0.015 microsecond stack-loading time (34% improvement)
+    - Everything looks good in valgrind - no memory leaks
+    - Print statments look better (and there are conditional compilation statements to remove them completely from release builds)
+    - Ready to start working on querying this thing!
+    
+    Things to remember:
+        - I have not yet optimized the order in which the arrays are placed into the stack. Tentatively, I think that the following order would be optimal for fast query times:
+            First: Word arrays
+            Second: Index arrays
+            Third: 'Skip' Index arrays
+            Fourth: WordList datastructure

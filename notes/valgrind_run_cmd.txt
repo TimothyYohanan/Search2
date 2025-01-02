@@ -1,0 +1,1 @@
+valgrind --leak-check=full --track-origins=yes --suppressions=/usr/libexec/valgrind/default.supp --show-leak-kinds=all ./Search2 2>> valgrind_output.txt

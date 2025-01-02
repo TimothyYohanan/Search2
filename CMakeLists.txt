@@ -6,8 +6,8 @@ project(Search2 C CXX)
 
 
 ################## Compile-time options ##################
-set(DEBUG_BUILD            ON                           )
-set(USE_ADDRESS_SANITIZER  ON                           )
+set(DEBUG_BUILD            OFF                           )
+set(USE_ADDRESS_SANITIZER  OFF                           )
 set(PROJECT_BINARY_DIR     "${CMAKE_SOURCE_DIR}/build"  )
 set(CPU_THREADS            18                           )
 ################ end Compile-time options ################

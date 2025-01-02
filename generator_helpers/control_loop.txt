@@ -1,6 +1,4 @@
     uint16_t input_length = 0;
-    const void* index = NULL;
-    const void* skipIndex = NULL;
 
     while (1) 
     {
@@ -11,78 +9,17 @@
         input[strcspn(input, "\n")] = '\0'; // Remove the newline character that fgets might add at the end
         
         if (strcmp(input, "q") == 0) {
-            fprintf(stdout, "main() - control_loop - everything is fine [0] - exiting the program.\n\n");
+            fprintf(stdout, "main() - control_loop - everything is fine [-] - exiting the program.\n\n");
             break;
         }
 
         input_length = (uint16_t)strlen(input);
 
-        const uint16_t* nWords = getNumberOfWords(input_length);
-        if (nWords)
-        {
-            for (uint16_t i = 0; i < input_length; ++i)
-            {
-                skipIndex = getSkipIndex(input_length, i);
-                if (skipIndex)
-                {
-                    fprintf(stdout, "main() - control_loop - everything is fine [1] - Skip index %" PRIu16 " is valid.\n", i);
+        /*
+        * This is where the input gets sent to the primary thread
+        */
 
-                    const uint8_t charToken = (uint8_t)(tolower(input[i]) - 'a'); // ToDo: does not handle non-character inputs.
-
-                    if (((int32_t*)skipIndex)[charToken] != -1)
-                    {
-                        index = getIndex(input_length, i);
-                        if (index != NULL)
-                        {
-                            fprintf(stdout, "main() - control_loop - everything is fine [3] - Index %" PRIu16 " is valid.\n", i);
-
-                            const int32_t partition_size = idx_partition_size((int32_t*)skipIndex, charToken, *nWords);
-                            if (partition_size <= 0)
-                            {
-                                fprintf(stderr, "main() - control_loop - Err [--] - Partition Size %" PRIi32 " is invalid.\n", partition_size);
-                            } else
-                            {
-                                fprintf(stdout, "main() - control_loop - everything is fine [--] - Partition Size %" PRIi32 " is valid.\n", partition_size);
-
-                                /*
-                                * DEBUG AREA
-                                */
-                                for (int32_t j = 0; j < partition_size; ++j)
-                                {
-                                    void* wordList = getWordlist(input_length);
-                                    if (wordList)
-                                    {
-                                        const int32_t z = ((int32_t*)skipIndex)[j];
-
-
-                                        
-                                        const uint16_t zz = ((uint16_t*)index)[z];
-                                        const char* zzz = ((char*)wordList) + zz;
-
-                                        // fprintf(stdout, "main() - control_loop - DEBUG: what's this? '%.*s'", input_length - i, zzz);
-                                    } else
-                                    {
-                                        fprintf(stderr, "main() - control_loop - Err [--] - wordList is invalid.\n");
-                                    }
-                                }
-                            }
-                        } else
-                        {
-                            fprintf(stderr, "main() - control_loop - Err [4] - Index %" PRIu16 " is invalid.\n", i);
-                        }
-                    }
-                } else
-                {
-                    fprintf(stderr, "main() - control_loop - Err [2] - Skip index %" PRIu16 " is invalid.\n", i);
-                }
-            }
-            fprintf(stdout, "main() - control_loop - everything is fine [--] - There are %" PRIu16 " words with %" PRIu16 " characters in the wordlist.\n", *nWords, input_length);
-        } else
-        {
-            fprintf(stderr, "main() - control_loop - Err [5] - There are no words with %" PRIu16 " characters in the wordlist.\n", input_length);
-        }
-
-        fprintf(stdout, "main() - control_loop - everything is fine [5] - You entered: %s.\n\n", input);
+        fprintf(stdout, "main() - control_loop - everything is fine [-] - You entered: %s.\n\n", input);
 
         memset(input, 0, STDIN_BUFFER_SIZE);
     }
