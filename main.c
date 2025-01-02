@@ -10,9 +10,13 @@
 
 #include "src/primary_thread.h"
 
-#define MAIN_LOG_DEBUG  // uncomment to print debug messages to the console
-#define MAIN_LOG_DEBUG_CLEANUP 
 
+/*
+* Note: These are all automatically switched on when the project is built in DEBUG, and switched off when built in RELEASE.
+*/
+// #define MAIN_LOG_DEBUG
+// #define MAIN_LOG_DEBUG_CLEANUP 
+               
 #define STDIN_BUFFER_SIZE 500 * sizeof(char)
 
 

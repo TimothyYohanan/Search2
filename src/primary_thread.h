@@ -6,10 +6,22 @@
 #include <time.h>
 #include <pthread.h>
 
-#define PRIMARY_THREAD_LOG_DEBUG_STACK_LOAD_TIME
-#define PRIMARY_THREAD_LOG_DEBUG_CLEANUP
-#define PRIMARY_THREAD_LOG_DEBUG_INIT_THREAD
-#define PRIMARY_THREAD_LOG_DEBUG_JOB_LOOP
+/*
+* Note: These are all automatically switched on when the project is built in DEBUG, and switched off when built in RELEASE.
+*       * All, with the exception of PRIMARY_THREAD_LOG_DEBUG_STACK_LOAD_TIME, which has a seperate compilation switch.
+*
+* If TEST_WORDLIST_FOR_SAFETY is defined,
+* a function will run after everything is loaded into the stack
+* which will verify that the wordlist is safe to use.
+*
+* This should be tested every time that a new wordlist is used, 
+* and then undefined (for speed) after the new wordlist is verified.
+*/
+// #define TEST_WORDLIST_FOR_SAFETY 
+// #define PRIMARY_THREAD_LOG_DEBUG_STACK_LOAD_TIME
+// #define PRIMARY_THREAD_LOG_DEBUG_CLEANUP
+// #define PRIMARY_THREAD_LOG_DEBUG_INIT_THREAD
+// #define PRIMARY_THREAD_LOG_DEBUG_JOB_LOOP
 
 #define THREAD_CMD_INITIALIZE         (uint8_t)0   // This item is not currently used, but it is here to remind me that during the initialization phase, the mutex passed to the thread is actually used for the thread to signal main that it is done initializing. That is the only time that the thread signals main using the mutex - otherwise, it is the other way arround.
 #define THREAD_CMD_WAIT               (uint8_t)1

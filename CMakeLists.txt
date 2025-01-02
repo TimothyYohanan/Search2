@@ -6,8 +6,9 @@ project(Search2 C CXX)
 
 
 ################## Compile-time options ##################
-set(DEBUG_BUILD            OFF                           )
-set(USE_ADDRESS_SANITIZER  OFF                           )
+set(DEBUG_BUILD            ON                           )
+set(LOG_STACK_LOAD_TIME    ON                           )
+set(USE_ADDRESS_SANITIZER  ON                           )
 set(PROJECT_BINARY_DIR     "${CMAKE_SOURCE_DIR}/build"  )
 set(CPU_THREADS            18                           )
 ################ end Compile-time options ################
@@ -36,30 +37,32 @@ endif()
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/library")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/library")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
-set(CMAKE_RUNTIME_DATA_DIRECTORY "${PROJECT_BINARY_DIR}/data")
 
 if(USE_ADDRESS_SANITIZER)
-find_library(asan_LIBRARY NAMES asan PATHS "/usr/lib/gcc/x86_64-redhat-linux/11")
+    find_library(asan_LIBRARY NAMES asan PATHS "/usr/lib/gcc/x86_64-redhat-linux/11")
 endif()
 
 add_executable(Search2 main.c)
 
-target_sources(Search2
-    PRIVATE 
-        ${PROJECT_SOURCE_DIR}/src/primary_thread.c
-        ${PROJECT_SOURCE_DIR}/src/wordlist.c
-    )
-
-target_include_directories(Search2 
-    PUBLIC 
-        ${PROJECT_SOURCE_DIR}/src/
-    )
+file(GLOB SOURCES "src/*.c")
+target_sources(Search2 PRIVATE ${SOURCES})
+target_include_directories(Search2 PRIVATE ${PROJECT_SOURCE_DIR}/src/)
 
 if(USE_ADDRESS_SANITIZER)
-target_link_libraries(Search2  
-    PUBLIC 
-        asan
-)
+    target_link_libraries(Search2 PRIVATE asan)
+endif()
+
+if(DEBUG_BUILD)
+    target_compile_definitions(Search2 PRIVATE MAIN_LOG_DEBUG)
+    target_compile_definitions(Search2 PRIVATE MAIN_LOG_DEBUG_CLEANUP )
+    target_compile_definitions(Search2 PRIVATE PRIMARY_THREAD_LOG_DEBUG_CLEANUP)
+    target_compile_definitions(Search2 PRIVATE PRIMARY_THREAD_LOG_DEBUG_INIT_THREAD)
+    target_compile_definitions(Search2 PRIVATE PRIMARY_THREAD_LOG_DEBUG_JOB_LOOP)
+    target_compile_definitions(Search2 PRIVATE TEST_WORDLIST_FOR_SAFETY)
+endif()
+
+if(LOG_STACK_LOAD_TIME)
+    target_compile_definitions(Search2 PRIVATE PRIMARY_THREAD_LOG_DEBUG_STACK_LOAD_TIME)
 endif()
 
 install(

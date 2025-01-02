@@ -24,7 +24,7 @@ Synopsis of development up until Jan 2, 2025:
                 - 3 milliseconds! I went from a 0.044 microsecond load time to a ~3000 microsecond load time.
 
 
-Jan 2, 2025:
+Jan 2, 2025 - Early Morning:
     - 0.015 microsecond stack-loading time (34% improvement)
     - Everything looks good in valgrind - no memory leaks
     - Print statments look better (and there are conditional compilation statements to remove them completely from release builds)
@@ -36,3 +36,12 @@ Jan 2, 2025:
             Second: Index arrays
             Third: 'Skip' Index arrays
             Fourth: WordList datastructure
+
+Jan 2, 2025:
+    - Oh, hey, I forgot to write a test for all this generated stuff. Did that. Caught one thing I did wrong in the generator. Fixed it.
+    - Found 1 inconsistency in the number type (uint8 vs uint16) used for word sizes in wlPart and wordList. Fixed it.
+    - Thought about how to express the position of a word in the wordList as an index in a way that is interoperable with databases. (see database_interop.h)
+    - Revamped the CMAKE file. 
+    - NOW I'm ready to start working on querying this thing! ... wait a second.
+    - I tried copying wordList into mutableWordList after loading everything into the stack in primary_thread.c. The initialization time ballooned to ~3 milliseconds again (see note from Jan 1, 2024).
+      I think I might be experiancing memory alignment issues. Hmm. 

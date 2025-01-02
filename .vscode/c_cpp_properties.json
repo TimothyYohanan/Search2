@@ -3,17 +3,14 @@
         {
             "name": "Linux",
             "includePath": [
-                "/usr/include/c++/11",
-                "/usr/include/c++/11/x86_64-redhat-linux",
                 "/usr/include",
                 "/usr/local/include",
                 "${workspaceFolder}/**"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/clang",
-            "intelliSenseMode": "clang-x64",
+            "compilerPath": "/usr/bin/gdb",
+            "intelliSenseMode": "linux-gcc-x64",
             "cStandard": "c11",
-            "cppStandard": "c++17",
             "browse": {
                 "path": [
                     "/usr/include",

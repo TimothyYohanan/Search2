@@ -16,8 +16,15 @@ typedef struct
 {
     const uint16_t   ct;         // the number of wordlist partitions stored in the wordlist
     const wlPart     parts[29];  // the partitions
-    const uint16_t   sizes[29];  // the number of characters that words stored in each partion have
+    const uint8_t    sizes[29];  // the number of characters that words stored in each partion have
 } wordList;
+
+typedef struct
+{
+    uint16_t   ct;
+    wlPart     parts[29];
+    uint8_t    sizes[29];
+} mutableWordList;
 
 /*
 * FUNCTIONS

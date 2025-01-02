@@ -9,10 +9,8 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/build",
-            "environment": [],
             "externalConsole": false,
-            "MIMode": "gdb",
-            "preLaunchTask":"CMake: Build (Debug)",
+            "preLaunchTask":"CMake: Build",
             "logging": {
                 "trace": true,
                 "engineLogging": true,
