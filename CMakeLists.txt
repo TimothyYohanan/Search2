@@ -6,9 +6,9 @@ project(Search2 C CXX)
 
 
 ################## Compile-time options ##################
-set(DEBUG_BUILD            ON                           )
+set(DEBUG_BUILD            OFF                           )
 set(LOG_STACK_LOAD_TIME    ON                           )
-set(USE_ADDRESS_SANITIZER  ON                           )
+set(USE_ADDRESS_SANITIZER  OFF                           )
 set(PROJECT_BINARY_DIR     "${CMAKE_SOURCE_DIR}/build"  )
 set(CPU_THREADS            18                           )
 ################ end Compile-time options ################
@@ -32,6 +32,8 @@ if(DEBUG_BUILD)
 else()
     set(CMAKE_BUILD_TYPE RELEASE CACHE STRING "" FORCE)
     add_compile_options(-O3)
+    add_compile_options(-funroll-loops)
+    add_compile_options(-ftree-vectorize)
 endif()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/library")

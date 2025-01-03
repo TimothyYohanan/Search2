@@ -1,0 +1,12 @@
+Valgrind
+  $ valgrind --leak-check=full --track-origins=yes --suppressions=/usr/libexec/valgrind/default.supp --show-leak-kinds=all ./Search2 2>> valgrind_output.txt
+
+ObjDump
+  $ objdump -d Search2 > Search2.asm
+
+Perf
+  $ perf stat -e branch-instructions,branch-misses,bus-cycles,cache-misses,cache-references,cpu-cycles,instructions,ref-cycles,alignment-faults,bpf-output,cgroup-switches,context-switches,cpu-clock,cpu-migrations,dummy,emulation-faults,major-faults,minor-faults,page-faults,task-clock ./Search2 2>> Search2Perf.txt
+
+
+
+

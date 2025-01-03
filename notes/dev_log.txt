@@ -45,3 +45,25 @@ Jan 2, 2025:
     - NOW I'm ready to start working on querying this thing! ... wait a second.
     - I tried copying wordList into mutableWordList after loading everything into the stack in primary_thread.c. The initialization time ballooned to ~3 milliseconds again (see note from Jan 1, 2024).
       I think I might be experiancing memory alignment issues. Hmm. 
+
+Jan 3, 2025:
+    - Reassessing the following ideas and thinking about how to perfectly structure this thing:
+        1.) "Accessing data in the heap is slower than accessing data on the stack because you have to follow a pointer to get there."
+        2.) "The memory locations of staticly allocated variables in the program data sector are already known at runtime."
+              - That's good!
+        3.) "Accessing items in the stack is always the fastest - faster than the heap, and faster than the program data sector."
+              - I made a mistake in this assumption. ("Accessing items in the..." != "The")
+              - Did some brushing up on how the stack actually works.
+    
+        I've disassembled a control and test version of the program into the notes directory, and also profiled the program using perf.
+
+        The only change to the source code that was made to arrive at the 'test' variant of the disassembly is that I added the line "getMutableCopy(&masterWordlist);" at 626 of primary_threads.c.
+            - The test version assembly has A LOT more going on than the control version 
+                - I have no experience working in assembly, but I do know a few instructions - and that less of them is generally better than more.
+            - There are a lot more cache misses in the test version than the control version.
+            - Both versions have 0 alignment faults.
+            - The control version has 60 page faults, while the test version has 225.
+
+        I think it's time to backtrack and utilize the program data segment as well as the stack.
+        I've itemized the memory calculations in calc_itemized.ipynb, which will be my primary reference for choosing which memory segment to use for the various datastructures.
+        At this point, I know how long it takes to load everything into the stack, and how long it takes to copy memory from the stack using that strategy, and I have a 'snapshot' of the program's assembly instructions and performance for comparison against future versions.
