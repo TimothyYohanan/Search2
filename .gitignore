@@ -6,8 +6,11 @@ __pycache__/
 
 /build/
 
-generate_primary_thread.ipynb
+notes/pseudocode/
 
-generate_wordlist_header.ipynb
+generators/generate_primary_thread_source.ipynb
+generators/generate_wordlist_header.ipynb
+generators/generate_words_header.ipynb
+generators/generate_indexes_header.ipynb
 
-/pseudocode/
+

@@ -1,16 +1,25 @@
-==67596== Memcheck, a memory error detector
-==67596== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
-==67596== Using Valgrind-3.23.0 and LibVEX; rerun with -h for copyright info
-==67596== Command: ./Search2
-==67596== 
-==67596== Warning: set address range perms: large range [0x59c9c000, 0xd0ff7000) (noaccess)
-==67596== Warning: set address range perms: large range [0x59c9c000, 0xd0ff7000) (noaccess)
-==67596== 
-==67596== HEAP SUMMARY:
-==67596==     in use at exit: 0 bytes in 0 blocks
-==67596==   total heap usage: 3 allocs, 3 frees, 2,320 bytes allocated
-==67596== 
-==67596== All heap blocks were freed -- no leaks are possible
-==67596== 
-==67596== For lists of detected and suppressed errors, rerun with: -s
-==67596== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14475== Memcheck, a memory error detector
+==14475== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==14475== Using Valgrind-3.23.0 and LibVEX; rerun with -h for copyright info
+==14475== Command: ./Search2
+==14475== 
+==14475== Warning: set address range perms: large range [0x59c9c000, 0xd0ff7000) (noaccess)
+==14475== Thread 2:
+==14475== Conditional jump or move depends on uninitialised value(s)
+==14475==    at 0x40318A: getMutableCopy (in /home/tyohanan/Documents/GitHub/Search 2/build/bin/Search2)
+==14475==    by 0x403040: init_thread (in /home/tyohanan/Documents/GitHub/Search 2/build/bin/Search2)
+==14475==    by 0x48F4D21: start_thread (in /usr/lib64/libc.so.6)
+==14475==    by 0x4979033: clone (in /usr/lib64/libc.so.6)
+==14475==  Uninitialised value was created by a stack allocation
+==14475==    at 0x40166D: init_thread (in /home/tyohanan/Documents/GitHub/Search 2/build/bin/Search2)
+==14475== 
+==14475== Warning: set address range perms: large range [0x59c9c000, 0xd0ff7000) (noaccess)
+==14475== 
+==14475== HEAP SUMMARY:
+==14475==     in use at exit: 0 bytes in 0 blocks
+==14475==   total heap usage: 3 allocs, 3 frees, 2,320 bytes allocated
+==14475== 
+==14475== All heap blocks were freed -- no leaks are possible
+==14475== 
+==14475== For lists of detected and suppressed errors, rerun with: -s
+==14475== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

@@ -67,3 +67,24 @@ Jan 3, 2025:
         I think it's time to backtrack and utilize the program data segment as well as the stack.
         I've itemized the memory calculations in calc_itemized.ipynb, which will be my primary reference for choosing which memory segment to use for the various datastructures.
         At this point, I know how long it takes to load everything into the stack, and how long it takes to copy memory from the stack using that strategy, and I have a 'snapshot' of the program's assembly instructions and performance for comparison against future versions.
+
+Jan 3, 2025 - Evening:
+    - Moved "words" and "indexes" to the program data sector.
+    - Left everything else (including "skip indexes") on the stack.
+    - ~15 microseconds to load the stack, ~0.02 microseconds to copy the wordlist.
+        - That's an improvement.
+    - There's a new snapshot of the assembly instructions and performance metrics in notes
+
+    - Highlighted output from Valgrind:
+        ==14475== Thread 2:
+        ==14475== Conditional jump or move depends on uninitialised value(s)
+        ==14475==    at 0x40318A: getMutableCopy (in /home/tyohanan/Documents/GitHub/Search 2/build/bin/Search2)
+        ==14475==    by 0x403040: init_thread (in /home/tyohanan/Documents/GitHub/Search 2/build/bin/Search2)
+        ==14475==    by 0x48F4D21: start_thread (in /usr/lib64/libc.so.6)
+        ==14475==    by 0x4979033: clone (in /usr/lib64/libc.so.6)
+        ==14475==  Uninitialised value was created by a stack allocation
+        ==14475==    at 0x40166D: init_thread (in /home/tyohanan/Documents/GitHub/Search 2/build/bin/Search2)
+    
+    - Hmm. What's uninitialized?
+        1.) Figure that out.
+        2.) Write a new test that simulates a very performance-intensive search and continue optimizing how the memory is utilized based on that (instead of copying memory.)

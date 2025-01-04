@@ -46,9 +46,11 @@ endif()
 
 add_executable(Search2 main.c)
 
-file(GLOB SOURCES "src/*.c")
+file(GLOB SOURCES "src/private/*.c")
 target_sources(Search2 PRIVATE ${SOURCES})
-target_include_directories(Search2 PRIVATE ${PROJECT_SOURCE_DIR}/src/)
+
+file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/src/public/*)
+target_include_directories(Search2 PRIVATE ${HEADERS})
 
 if(USE_ADDRESS_SANITIZER)
     target_link_libraries(Search2 PRIVATE asan)

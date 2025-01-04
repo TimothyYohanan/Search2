@@ -8,7 +8,7 @@
 #include <errno.h>
 #include <pthread.h>
 
-#include "src/primary_thread.h"
+#include "src/public/primary_thread.h"
 
 
 /*
