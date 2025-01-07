@@ -5,12 +5,8 @@
 #include "../public/program_data/words.h"
 #include "../public/program_data/indexes.h"
 
+#include "../public/test_wordlist.h"
 
-#ifdef TEST_WORDLIST_FOR_SAFETY
-  #include "test_wordlist.h"
-#endif
-
-#include "../public/search.h"
 
 void cleanup_thread(ThreadArgs* args)
 {
@@ -442,8 +438,6 @@ void* init_thread(void* arg)
 
     fprintf(stdout, "init_thread() - DEBUG: [-] message: Time taken to load the stack: %lf microseconds\n\n", ms);
 #endif
-
-    // getMutableCopy(&masterWordlist);
                
     /*
     * DONE LOADING THE STACK
@@ -451,9 +445,7 @@ void* init_thread(void* arg)
 #ifdef TEST_WORDLIST_FOR_SAFETY
     if (WordListIsSafe(&masterWordlist) == WORD_LIST_NOT_SAFE)
     {
-#ifdef PRIMARY_THREAD_LOG_DEBUG_INIT_THREAD
         fprintf(stderr, "init_thread() - ERROR [-]: Word list Is Not Safe to use.\n");
-#endif
                
         clock_gettime(1, &args->state->time);
         args->state->status = THREAD_STATUS_ERROR_QUIT;
@@ -463,11 +455,11 @@ void* init_thread(void* arg)
         return NULL;
     } else
     {
-#ifdef PRIMARY_THREAD_LOG_DEBUG_INIT_THREAD
         fprintf(stderr, "init_thread() - DEBUG [-]: Verified that the wordlist is safe to use. Now that this is verified, you can comment out the definition of TEST_WORDLIST_FOR_SAFETY in primary_thread.h to improve initialization speed.\n\n");
-#endif
     }
 #endif
+
+    timedFakeSearch_p2(&masterWordlist);
                
     /*
     * SIGNAL MAIN THAT IT CAN CONTINUE

@@ -88,3 +88,17 @@ Jan 3, 2025 - Evening:
     - Hmm. What's uninitialized?
         1.) Figure that out.
         2.) Write a new test that simulates a very performance-intensive search and continue optimizing how the memory is utilized based on that (instead of copying memory.)
+
+Jan 7, 2025:
+    - Referencing https://bytes.usc.edu/cs104/wiki/valgrind, I belive the uninitialized values output from Valgrind is a non-issue.
+       - masterWordlist (line 218 of primary_thread.c) 'initializes' some integer parameters and then is copied at line 446.
+       - this message is no longer presented with the new tests.
+
+    - While writing the new tests I noticed some things:
+       - In WordListIsSafe() and timedFakeSearch_p2() I use a 'fancy' cast that looks fun, however, it may have some negative effects on performance.
+          - This is what I mean by 'fancy' casting (if there is a technical term for this, I'm not aware of it): 
+              - const uint16_t (*idxs)[wordListPartition.size][wordListPartition.ct]  = (const uint16_t (**)[wordListPartition.size][wordListPartition.ct]) wordListPartition.idxs;
+          - In debugging, it seems that the program 'jumps back and forth' several times to determine values each time the 'fancy' casted variable is referenced.
+          - I think it is worthwhile to test the following changes to determine whether there is a performance impact associated with 'fancy' casting before continuing on: 
+              - Change wlPart.idxs and wlPart.skIdxs to ** instead of *
+              - Remove the 'fancy' casts and use pointer addition instead
