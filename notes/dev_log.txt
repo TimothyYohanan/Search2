@@ -101,4 +101,21 @@ Jan 7, 2025:
           - In debugging, it seems that the program 'jumps back and forth' several times to determine values each time the 'fancy' casted variable is referenced.
           - I think it is worthwhile to test the following changes to determine whether there is a performance impact associated with 'fancy' casting before continuing on: 
               - Change wlPart.idxs and wlPart.skIdxs to ** instead of *
+                - Jan 8, 2025 CORRECTION: Not **. That wouldn't make sense. No changes to wlPart.
               - Remove the 'fancy' casts and use pointer addition instead
+
+Jan 8, 2025:
+    - Modified timedFakeSearch_p2 to use pointer addition instead of 'fancy' casting. The function is called timedFakeSearch_p2_notFancy.
+    - Tested it against timedFakeSearch_p2. Result: timedFakeSearch_p2_notFancy was faster.
+    - Made a simple optimization to timedFakeSearch_p2. Result: timedFakeSearch_p2 was faster.
+    - Conclusion: the 'jumps' observed while debugging are nothing to worry about.
+
+Jan 9, 2025:
+    - There's a new snapshot of the assembly instructions and performance metrics in notes
+    
+    - Next Steps:
+        - Optimize memory (this is the main section of the project)
+        - Write search/sort algorithms
+        - Multithread
+        - Turn this thing into a shared library
+

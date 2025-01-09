@@ -1,0 +1,38 @@
+
+ Performance counter stats for './Search2':
+
+        20,487,051      cpu_atom/branch-instructions:u/  #    1.415 G/sec                     
+     <not counted>      cpu_core/branch-instructions:u/                                         (0.00%)
+             8,939      cpu_atom/branch-misses:u/        #    0.04% of all branches           
+     <not counted>      cpu_core/branch-misses:u/                                               (0.00%)
+        22,246,224      cpu_atom/bus-cycles:u/           #    1.536 G/sec                     
+     <not counted>      cpu_core/bus-cycles:u/                                                  (0.00%)
+           176,627      cpu_atom/cache-misses:u/         #   25.76% of all cache refs         
+     <not counted>      cpu_core/cache-misses:u/                                                (0.00%)
+           685,654      cpu_atom/cache-references:u/     #   47.351 M/sec                     
+     <not counted>      cpu_core/cache-references:u/                                            (0.00%)
+        31,858,273      cpu_atom/cpu-cycles:u/           #    2.200 GHz                       
+     <not counted>      cpu_core/cpu-cycles:u/                                                  (0.00%)
+        87,893,543      cpu_atom/instructions:u/         #    2.76  insn per cycle            
+     <not counted>      cpu_core/instructions:u/                                                (0.00%)
+        22,246,224      cpu_atom/ref-cycles:u/           #    1.536 G/sec                     
+     <not counted>      cpu_core/ref-cycles:u/                                                  (0.00%)
+                 0      alignment-faults:u               #    0.000 /sec                      
+                 0      bpf-output:u                     #    0.000 /sec                      
+                 0      cgroup-switches:u                #    0.000 /sec                      
+                 0      context-switches:u               #    0.000 /sec                      
+             14.48 msec cpu-clock:u                      #    0.005 CPUs utilized             
+                 0      cpu-migrations:u                 #    0.000 /sec                      
+                 0      dummy:u                          #    0.000 /sec                      
+                 0      emulation-faults:u               #    0.000 /sec                      
+                 0      major-faults:u                   #    0.000 /sec                      
+             3,120      minor-faults:u                   #  215.468 K/sec                     
+             3,120      page-faults:u                    #  215.468 K/sec                     
+             14.49 msec task-clock:u                     #    0.005 CPUs utilized             
+
+       2.679419467 seconds time elapsed
+
+       0.005790000 seconds user
+       0.008773000 seconds sys
+
+

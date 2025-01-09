@@ -178,11 +178,11 @@ void timedFakeSearch_p2(const wordList* WordList)
 
             const char* wordListStartPtr = (char*)wordListPartition.words;
 
+            const uint16_t (*idxs)[wordListPartition.size][wordListPartition.ct] = (const uint16_t (**)[wordListPartition.size][wordListPartition.ct]) wordListPartition.idxs;
+
             for(uint8_t iCharacter = 0; iCharacter < wordListPartition.size; ++iCharacter)
             {
                 bool foundLetter = false;
-
-                const uint16_t (*idxs)[wordListPartition.size][wordListPartition.ct]  = (const uint16_t (**)[wordListPartition.size][wordListPartition.ct]) wordListPartition.idxs;
 
                 for (uint16_t i = 0; i < wordListPartition.ct; ++ i)
                 {
@@ -206,6 +206,71 @@ void timedFakeSearch_p2(const wordList* WordList)
                             goto nextIndex;
                         }
                     }
+                }
+                nextIndex:
+            }
+        }
+    }
+
+    clock_gettime(1, &end);
+
+    free(fakeBuffer);
+
+    const double ns =((double)(end.tv_sec - start.tv_sec) * 1e9) + ((double)(end.tv_nsec - start.tv_nsec));
+    fprintf(stdout, "timedFakeSearch_p2() - found %u total occurrences of the letters e, t, a, o, and i, without removing duplicate words, and completed in %u nanoseconds\n\n", fakeBufferSize, (uint64_t)ns);
+}
+
+void timedFakeSearch_p2_notFancy(const wordList* WordList)
+{
+    const char searchTerms[5] = {'e', 't', 'a', 'o', 'i'};
+    const uint16_t reallocAmmt = 1e3; // realloc 1 kb at a time
+    
+    uint64_t fakeBufferSize = 0;
+    char** fakeBuffer = (char**)malloc(reallocAmmt * sizeof(char**));
+    
+    struct timespec start, end;
+
+    clock_gettime(1, &start);
+
+    for (uint8_t iSearchTerm = 0; iSearchTerm < sizeof(searchTerms); ++iSearchTerm)
+    {
+        const char searchTerm = searchTerms[iSearchTerm];
+
+        for (uint16_t iWordListPartition = 0; iWordListPartition < WordList->ct; ++iWordListPartition)
+        {
+            const wlPart wordListPartition = WordList->parts[iWordListPartition];
+
+            const char* wordListStartPtr = (char*)wordListPartition.words;
+
+            for(uint8_t iCharacter = 0; iCharacter < wordListPartition.size; ++iCharacter)
+            {
+                bool foundLetter = false;
+
+                uint16_t* idxPtr  = (uint16_t*)wordListPartition.idxs + (uint32_t)(iCharacter * wordListPartition.ct);
+
+                for (uint16_t i = 0; i < wordListPartition.ct; ++ i)
+                {
+                    const char* wordPtr =  (const char*)((uintptr_t)wordListStartPtr + (uintptr_t)(*idxPtr * wordListPartition.size));
+                    const char* charPtr =  (const char*)((uintptr_t)wordPtr + (uintptr_t)iCharacter);
+
+                    if (*charPtr == searchTerm)
+                    {
+                        foundLetter = true;
+                        fakeBufferSize += 1;
+                        if (fakeBufferSize % reallocAmmt == 0)
+                        {
+                            fakeBuffer = (char**)realloc(fakeBuffer, (fakeBufferSize + reallocAmmt) * sizeof(char**));
+                        }
+                        
+                        fakeBuffer[fakeBufferSize - 1] = wordPtr;
+                    } else
+                    {
+                        if (foundLetter)
+                        {
+                            goto nextIndex;
+                        }
+                    }
+                    idxPtr += 1;
                 }
                 nextIndex:
             }
