@@ -119,3 +119,23 @@ Jan 9, 2025:
         - Multithread
         - Turn this thing into a shared library
 
+Jan 16, 2025:
+    I have begun working on the mobile app again (see 'Synopsis of development up until Jan 2, 2025'), and also the school semester has now begun, so I'm putting this project on pause.
+    I do plan on coming back to it! I want to use this, or something similar to it, for the server end of the app.
+
+    Since Jan 9, 2025 I have written a more realistic search implimentation that uses the skip indexes.
+    While doing that, I changed the skip indexes a bit: there was one problem with the generator - now fixed - and I also changed the second element of the skip index to be the number of indicies between the sorted index segments rather than the index of the next index segment.
+    These changes are not yet on GitHub.
+
+    So, here's the problem:
+      Even using the skip indexes, the search takes too long.
+      It takes about 600 microseconds to find all of the indexes of words that contain the letter 'e,' without filtering out duplicates.
+      Filtering out duplicates could be pretty dang fast, and that's a whole project in itself. I'm thinking a modified radix sort + bsearch.
+      Retrieving the words would be slow, since we have to "jump around" in memory. Another 600 microseconds? Maybe.
+
+    So, that's fine. I think it would be faster than SQlite for this one specific type of search I'm trying to do (reference my previous project, here on GitHub, 'Search') even without multithreading, but that's not what I'm after. I want it to be WAY faster. I'm not really doing a side-by-side comparison here. I'm using way more words in this project than in the last.
+
+    If I optimized memory further (I'm no expert on this) I would combine the skip-indexes with their corresponding index arrays so that the first 2*26 elements of the array is the skip index, and the rest is the index. That could be good for cache locality. There are a few things that could be done with SIMD instructions, but so far, not many. 
+
+    Still, by my estimation, it would not be fast enough for what I want to use it for - even with multithreading. When I come back to this, I'm going to try doing it with a GPU. 
+
